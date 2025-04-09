@@ -27,23 +27,18 @@ self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Возвращаем кэшированный ресурс, если он есть
                 if (response) {
                     return response;
                 }
                 
-                // Иначе делаем запрос к сети
                 return fetch(event.request).then(
                     response => {
-                        // Проверяем, получили ли мы корректный ответ
                         if(!response || response.status !== 200 || response.type !== 'basic') {
                             return response;
                         }
                         
-                        // Клонируем ответ
                         const responseToCache = response.clone();
                         
-                        // Кэшируем новый ресурс
                         caches.open(CACHE_NAME)
                             .then(cache => {
                                 cache.put(event.request, responseToCache);
@@ -52,7 +47,6 @@ self.addEventListener('fetch', event => {
                         return response;
                     }
                 ).catch(() => {
-                    // В случае ошибки (офлайн режим), можно вернуть fallback-страницу
                     if (event.request.headers.get('accept').includes('text/html')) {
                         return caches.match('/index.html');
                     }

@@ -4,15 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const notesList = document.getElementById('notes-list');
     const offlineStatus = document.getElementById('offline-status');
     
-    // Проверка онлайн-статуса
     updateOnlineStatus();
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
     
-    // Загрузка заметок при запуске
     loadNotes();
     
-    // Добавление новой заметки
     addNoteBtn.addEventListener('click', addNote);
     noteInput.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'Enter') {
@@ -46,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function saveNote(note) {
         let notes = getNotes();
-        notes.unshift(note); // Добавляем новую заметку в начало массива
+        notes.unshift(note); 
         localStorage.setItem('notes', JSON.stringify(notes));
     }
     
@@ -71,14 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         
-        // Добавляем новую заметку в начало списка
         if (notesList.firstChild) {
             notesList.insertBefore(noteElement, notesList.firstChild);
         } else {
             notesList.appendChild(noteElement);
         }
         
-        // Добавляем обработчик удаления
         noteElement.querySelector('.delete-btn').addEventListener('click', () => {
             deleteNote(note.id);
             noteElement.remove();
