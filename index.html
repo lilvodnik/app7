@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Офлайн-заметки</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4a76a8">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Мои заметки</h1>
+            <div id="offline-status" class="offline-status hidden">Офлайн-режим</div>
+        </header>
+        
+        <div class="note-form">
+            <textarea id="note-input" placeholder="Введите текст заметки..."></textarea>
+            <button id="add-note-btn">Добавить заметку</button>
+        </div>
+        
+        <div class="notes-list" id="notes-list">
+            <!-- Заметки будут добавляться здесь -->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
